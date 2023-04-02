@@ -1,0 +1,37 @@
+esphome:
+  name: device
+
+rp2040:
+  board: rpipicow
+  framework:
+    # Required until https://github.com/platformio/platform-raspberrypi/pull/36 is merged
+    platform_version: https://github.com/maxgerhardt/platform-raspberrypi.git
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "key"
+
+ota:
+  password: "password"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot in case wifi connection fails
+  ap:
+    ssid: "fallback"
+    password: "password"
+  domain: ".local.lan"
+
+dallas:
+  - pin: GPIO0
+
+sensor:
+  - platform: dallas
+    address: get_address
+    name: "Temperature"
